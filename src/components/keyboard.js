@@ -25,7 +25,7 @@ const Keyboard = (props) => (
        <input type="button" onClick={props.getValueBtn} value="3"/>
        <input type="button" onClick={props.getValueBtn} value="0"/>
        <input type="button" onClick={props.getValueBtn} value="."/>
-       <input type="button equalBtn" onClick={props.getValueBtn} value="="/>
+       <input type="button" className="equalBtn" onClick={props.getValueBtn} value="="/>
 
     </div>
 );
