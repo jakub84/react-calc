@@ -1,135 +1,95 @@
 import React, { Component } from 'react';
 import Keyboard from './keyboard'
 import Output from './output'
-let outputTab = []
+import update from 'immutability-helper'
+import math from 'mathjs'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      output: '.',
-      firstArg: '',
-      secondArg: ''
+      operations:[],
+      equations: [],
+      ishidden:''
+
     }
   }
 
-  getScore(outputTab) {
-    if (outputTab.includes("*")) this.getMultiply(outputTab)
-    else if (outputTab.includes("+")) this.getSum(outputTab)
-    else if (outputTab.includes("-")) this.getSubs(outputTab)
-    else if (outputTab.includes(":")) this.getDivide(outputTab)
-    else if (outputTab.includes("C")) this.getReset(outputTab)
-    else if (outputTab.includes("+/-")) this.changeSign(outputTab)
-  }
-
-  // getReset = (outputTab) => {
-  //   this.setState({
-  //     output: []
-  //   }) 
-  // }
-  changeSign = (outputTab) => {
-    // outputTab.pop()
-    console.log(outputTab)
-    let indexToSplit = outputTab.indexOf("+/-")
-    this.state.firstArg = outputTab.slice(0, indexToSplit).join('')
-    this.state.firstArg = parseInt(this.state.firstArg) * (-1)
-
-    // console.log({ firstArg, secondArg, outputTab })
-    // this.getmultiply(firstArg,secondArg)
-    this.setState({
-      output: this.state.firstArg
-    })
-  }
-  getMultiply = (outputTab) => {
-    outputTab.pop()
-    console.log(outputTab)
-    let indexToSplit = outputTab.indexOf("*")
-    this.state.firstArg = outputTab.slice(0, indexToSplit).join('')
-    this.state.firstArg = parseInt(this.state.firstArg)
-    this.state.secondArg = outputTab.slice(indexToSplit + 1).join('')
-    this.state.secondArg = parseInt(this.state.secondArg)
-    // console.log({ firstArg, secondArg, outputTab })
-    // this.getmultiply(firstArg,secondArg)
-    this.setState({
-      output: this.state.firstArg * this.state.secondArg
-    })
-  }
-
-  getSum = (outputTab) => {
-    outputTab.pop()
-    console.log(outputTab)
-    let indexToSplit = outputTab.indexOf("+")
-    this.state.firstArg = outputTab.slice(0, indexToSplit).join('')
-    this.state.firstArg = parseInt(this.state.firstArg)
-    this.state.secondArg = outputTab.slice(indexToSplit + 1).join('')
-    this.state.secondArg = parseInt(this.state.secondArg)
-    // console.log({ firstArg, secondArg, outputTab })
-    // this.getmultiply(firstArg,secondArg)
-    this.setState({
-      output: this.state.firstArg + this.state.secondArg
-    })
-  }
-
-  getSubs = (outputTab) => {
-    outputTab.pop()
-    console.log(outputTab)
-    let indexToSplit = outputTab.indexOf("-")
-    this.state.firstArg = outputTab.slice(0, indexToSplit).join('')
-    this.state.firstArg = parseInt(this.state.firstArg)
-    this.state.secondArg = outputTab.slice(indexToSplit + 1).join('')
-    this.state.secondArg = parseInt(this.state.secondArg)
-
-    this.setState({
-      output: this.state.firstArg - this.state.secondArg
-    })
-  }
-
-  getDivide = (outputTab) => {
-    outputTab.pop()
-    console.log(outputTab)
-    let indexToSplit = outputTab.indexOf(":")
-    this.state.firstArg = outputTab.slice(0, indexToSplit).join('')
-    this.state.firstArg = parseInt(this.state.firstArg)
-    this.state.secondArg = outputTab.slice(indexToSplit + 1).join('')
-    this.state.secondArg = parseInt(this.state.secondArg)
-  
-    this.setState({
-      output: (this.state.firstArg / this.state.secondArg).toFixed(2)
-    })
-  }
-
-  getValue = (e) => {
-    console.log(e.target.value)
-    outputTab.push(e.target.value)
-    this.setState({
-      output: outputTab
-    })
-    if (outputTab.includes('=')) {
-      this.getScore(outputTab);
-      outputTab = []
-    }
-    else if (outputTab.includes('C')) {
-      outputTab = []
+  calculate = () => {
+    let result = this.state.equations.join('')
+    if (result) {
+      result = math.eval(result)
+      result = math.format(result, {precision:14})
+      result = String(result)
       this.setState({
-        output: outputTab
+        operations: [result]
       })
+
     }
+  }
 
-    else if (outputTab.includes('+/-')) {
-      this.changeSign(outputTab);
-      // outputTab = []
+  handleClick = (e) => {
+    const value = e.target.value
+    // alert(value)
+    switch (value) {
+      case 'C': 
+      this.setState({
+        operations: [],
+        equations: [],
+        ishidden:'hide'
+      })
+      break
+      case '=': 
+      this.calculate()
+      break
+      case '<': 
+      this.setState ({
+        equations: this.state.equations.splice(0, this.state.equations.length-1)
+
+      })
+      break
+      case 'sqr': 
+      this.setState ({
+        equations: math.sqrt(this.state.equations),
+        operations: math.sqrt(this.state.equations),
+        ishidden:'show'
+
+      })
+      break
+      case '!x':
+      let factorial = 1
+      for(let i = 1; i<= this.state.equations;i++) {
+        factorial = factorial * i
+      } 
+      this.setState ({
+        equations: [factorial],
+        operations: [factorial],
+        ishidden:'show'
+
+      })
+      break
+      default:
+      let newOperations = update(this.state.equations,{
+        $push: [value]
+      })
+      this.setState({
+        equations: newOperations,
+        ishidden:'show'
+      })
+      break
     }
-
-
+   
   }
   render() {
     return (
       <div className="app">
         <Output
-          outputDisplay={this.state.output}
+          outputDisplay={this.state.operations}
+          equations={this.state.equations}
+          ishidden = {this.state.ishidden}
         />
         <Keyboard
-          getValueBtn={this.getValue}
+          getValueBtn={this.handleClick}
         />
       </div>
     );
