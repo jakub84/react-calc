@@ -1,13 +1,26 @@
 
 .output-container {
-    // background-color: red;
-    width: 100%;
+    position: absolute;
+    top: -50px;
+    z-index: -1;
+    width: 250px;
+    border-radius: 10px;
     text-align: center;
     padding: 30px;
     margin-bottom: 20px;
+       background-color: black;
+
+        @media (max-width: 600px) {
+            background: none;
+          }
     span {
+        // background-color: aqua;
+        display: inline-block;
         font-size: 30px;
         position: relative;
+        width: 100%;
+        height: 40px;
+        color: rgb(214, 224, 170); 
     &:after{
         content:'';
         position: absolute;
@@ -16,14 +29,14 @@
         animation-name: output-animation;
         animation-duration: 1s;
         animation-iteration-count: infinite;
-        bottom: 0px;
+        bottom: 3px;
     }
     }
 }
 
 
 @keyframes output-animation {
-    0%   {background-color: black}
+    0%   {background-color: rgb(255, 248, 190)}
     50% {background-color: rgba(0, 0, 0, 0)}
-    100%   {background-color: black}
+    100%   {background-color: rgb(255, 248, 190)}
 }
