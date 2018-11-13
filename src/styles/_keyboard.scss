@@ -1,0 +1,94 @@
+.keyboard-container {
+    border-radius:10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: #4c4c4c;
+    /* Old browsers */
+    background: -moz-linear-gradient(45deg, #4c4c4c 0%, #666666 16%, #474747 31%, #474747 31%, #2c2c2c 39%, #000000 61%, #3f3f3f 68%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #4c4c4c 0%, #666666 16%, #474747 31%, #474747 31%, #2c2c2c 39%, #000000 61%, #111111 68%, #2b2b2b 76%, #1c1c1c 91%, #131313 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #4c4c4c 0%, #666666 16%, #474747 31%, #474747 31%, #2c2c2c 39%, #1b1b1b2a 61%, #11111167 68%, #2b2b2b 76%, #1c1c1c63 91%, #131313 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', endColorstr='#131313', GradientType=1);
+    /* IE6-9 fallback on horizontal gradient */
+    -webkit-box-shadow: 0px 15px 41px 2px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 15px 41px 2px rgba(0,0,0,0.75);
+box-shadow: 0px 15px 41px 2px rgba(0,0,0,0.75);
+    @media (max-width: 600px) {
+        background: rgb(24, 24, 24);
+        box-shadow: none;
+      }
+
+    input {
+        flex-grow: 1;
+        background-color: transparent;
+        text-align: center;
+        border: none;
+        padding: 10px;
+        font-size: 14px; // margin: 10px;
+        width: 33%;
+        height: 45px;
+        color: rgba(240, 248, 255, 0.767);
+        cursor: pointer;
+        outline: none;
+        border: 1px solid rgba(17, 17, 17, 0.37);
+        @media (max-width: 600px) {
+            border: 1px solid rgba(68, 68, 68, 0.37);
+          }
+        &:hover {
+            background-color: rgb(180, 39, 39);
+            color: antiquewhite;
+            // font-size: 18px;
+            padding: 5px 10px;
+            animation-name: keyAnimation;
+            animation-duration: 0.3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+
+        }
+
+    }
+    .special {
+        background-color: rgb(61, 61, 61);
+        padding: 10px;
+        font-size: 14px; // margin: 10px;
+        height: 45px;
+        cursor: pointer;
+        outline: none; // &:hover {
+        //     background-color: black;
+        //     color: antiquewhite;
+        //     font-size: 18px;
+        // }
+        @media (max-width: 600px) {
+            border: 1px solid rgba(17, 17, 17, 0.37);
+          }
+        &:hover {
+            background-color: rgb(202, 148, 48);
+            color: antiquewhite;
+            // font-size: 18px;
+            padding: 5px 10px;
+            animation-name: keyAnimation;
+            animation-duration: 0.3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease-out;
+        }
+    }
+    .equalBtn {
+        // flex-grow: 1;
+        padding: 10px;
+        height: 45px;
+    }
+}
+
+@keyframes keyAnimation {
+ 0% {font-size: 14px;}
+ 50% {font-size: 10px}
+ 100% { font-size: 23px}
+}

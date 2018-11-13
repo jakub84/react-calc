@@ -1,0 +1,82 @@
+.output-container {
+    position: relative;
+    top: 150px;
+    z-index: -1;
+    width: 320px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 20px;
+    border-top: 2px solid rgb(180, 39, 39);
+    background: -moz-linear-gradient(top, rgba(56, 56, 56, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(56, 56, 56, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(143, 140, 140, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000', GradientType=0);
+    /* IE6-9 */
+    transition: all 0.3s;
+    
+    overflow: hidden;
+    &.hide {
+       
+        // opacity: 0;
+        top: 150px;
+
+    }
+    &.show {
+        top: 0;
+
+    }
+    @media (max-width: 600px) {
+        background: linear-gradient(to bottom, rgba(104, 103, 103, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+    span.output-string {
+        // background-color: aqua;
+        display: inline-block;
+        font-size: 50px;
+        position: relative;
+        width: 100%;
+        height: 40px;
+        color: rgb(214, 224, 170);
+    }
+    span.equations {
+        letter-spacing: 3px;
+        position: relative;
+        font-size: 16px;
+        color: azure; // background-color: red;
+        display: inline-block;
+        width: 100%;
+        height: 20px;
+        text-align: right;
+        &:after {
+            content: '';
+            position: absolute;
+            height: 2px;
+            width: 10px;
+            animation-name: output-animation;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+            bottom: 0px;
+        }
+    }
+}
+
+@keyframes output-animation {
+    0% {
+        background-color: rgb(255, 248, 190)
+    }
+    50% {
+        background-color: rgba(0, 0, 0, 0)
+    }
+    100% {
+        background-color: rgb(255, 248, 190)
+    }
+}
+
+@keyframes hide-shop-output {
+    0% {top: 150px}
+    50% {top: -10px}
+    100% {top: 0px}
+   }
